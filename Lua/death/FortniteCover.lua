@@ -6,7 +6,8 @@ end
 
 function fortniteCover:Dead()
 	math.randomseed(math.random() * 1000000 + Second() * Hour() * DayOfYear()) -- this is jank
-	self(1):Load(Path('Graphics', '_fortniteDeath/_' .. math.random(1, 23)))
+	self(1):Load(Path('Graphics', '_fortniteDeath/_' .. math.random(1, 24)))
+	--self(1):Load(Path('Graphics', '_fortniteDeath/xbox' ))
 	self(1):cmd("stretchto,0,0,SCREEN_WIDTH,SCREEN_HEIGHT;diffusealpha,0")
     GAMESTATE:ApplyGameCommand('sound,vine_thud')
 	self(1):cmd("sleep,.1212;diffusealpha,1;sleep,.277;diffusealpha,0;")
