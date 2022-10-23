@@ -94,6 +94,7 @@
 		UpdateBackgroundShaderTimerCommand="%function(self) self:GetShader():uniform1f('ptime', bgshader_ptime) end"
 	/>
 
+
 	<Layer
 		Shader="shader/theyaremanycolors.frag"
 		File="_black"
@@ -348,6 +349,30 @@
 			end
 		end"
 	/>
+	<Layer File="colormap.png" InitCommand="%function(self) colormap = self; self:visible(0) self:SetTextureFiltering(false) self:xy(SCREEN_CENTER_X+200,SCREEN_CENTER_Y) end"/>
+	<Layer File="lightmap.png" InitCommand="%function(self) lightmap = self; self:visible(0) end"/>
+	<Layer File="sea.obj.txt" Frag="sea.frag" Vert="sea.vert"
+    InitCommand="%function(self) worldsea=self; self:xy(-100,SCREEN_CENTER_Y) self:zoom(40)
+        Ocean = self;
+        self:hidden(0)
+        self:GetShader():uniform2f('offsetBack',1.0,1.0)
+        self:GetShader():uniform1f('daytime', 0.9)
+        Ocean:GetShader():uniformTexture('colormap', colormap:GetTexture())
+        Ocean:SetTexture(0, lightmap:GetTexture())
+        Ocean:rotationx(-50) --plz keep it this way the depth adds alot
+        self:addcommand('Update', function()
+            self:GetShader():uniform1f('t', os.clock())
+        end)
+        self:luaeffect('Update')
+    end"
+	UpdateBackgroundShaderMessageCommand="%function(self)
+			if oatBackgroundActualNo == 15 then
+				self:hidden(0)
+			else
+				self:hidden(1)
+			end
+		end"
+/>
 	
 	<Layer
 		Type="Quad"

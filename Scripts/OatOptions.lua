@@ -121,9 +121,17 @@ end
 function OptionBackgroundShader()
   local t = OptionRowBase('BackgroundShader')
 	t.OneChoiceForAllPlayers = true
-	t.Choices = {'Random', 'earthbound.frag', 'plasma.frag', 'topologica.frag', 'theyaremanycolors.frag', 'descent.frag', 'rez_dubstepmyass.frag',
-	'rez_mynameisjulia.frag', 'rez_roadtohell.frag', 'rez_structures.frag', 'rez_thedescent.frag', 'solid color', 'star factory', 'glacia'}
-    t.LoadSelections = function(self, list) if OatProfile().OATBackgroundShader then list[OatProfile().OATBackgroundShader] = true else list[1] = true end end
+	t.Choices = {
+		'Random', 'earthbound.frag', 'plasma.frag', 'topologica.frag', 'theyaremanycolors.frag', -- 5
+		'descent.frag', 'rez_dubstepmyass.frag', 'rez_mynameisjulia.frag', 'rez_roadtohell.frag', 'rez_structures.frag', -- 10
+		'rez_thedescent.frag', 'solid color', 'star factory', 'glacia','Ocean',  -- 15
+		'Daily Random' -- Please place this at end of array. DO NOT MOVE.
+	}
+    t.LoadSelections = function(self, list)
+		if OatProfile().OATBackgroundShader then
+			list[(OatProfile().OATBackgroundShader==0) and backgroundLength+1 or OatProfile().OATBackgroundShader] = true
+		else list[2] = true end
+	end
 	t.SaveSelections = function(self, list)
 		if list[1] then OatProfile().OATBackgroundShader = 1 end
 		if list[2] then OatProfile().OATBackgroundShader = 2 end
