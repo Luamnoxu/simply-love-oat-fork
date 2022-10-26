@@ -1,7 +1,7 @@
 <ActorFrame>
 	<children>
 		<BitmapText 
-			Font="_wendy small"
+			Font="_eurostile 30px"
 			OnCommand="zoom,0.4;maxwidth,184;horizalign,left;x,SCREEN_LEFT+20;y,SCREEN_TOP+105;PlayCommand,Refresh"
 			RefreshCommand="%function(self) self:settext(GetEditStepsText()) self:sleep(0.5); self:queuecommand('Refresh') end" 
 		/>

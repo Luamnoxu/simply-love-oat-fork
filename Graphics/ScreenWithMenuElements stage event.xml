@@ -2,13 +2,13 @@
 	<BitmapText
 		Condition="GetPref('EventMode') and ( ( ( Profile(0).SessionTimer or 0 ) == 0 ) or GAMESTATE:IsCourseMode() )"
 		Text="" 
-        Font="_wendy small"
+        Font="_eurostile 30px"
         OnCommand="ShadowLength,0;zoom,0.6"
     />
 	<BitmapText
 		Condition="IsTimedSet()"
 		Text="" 
-        Font="_wendy small" 
+        Font="_eurostile 30px" 
         OnCommand="%function(self) 
 			self:shadowlength(0); 
 			self:zoom(0); 

@@ -1,6 +1,6 @@
 <ActorFrame><children>
 	<BitmapText
-		Font="_wendy small"
+		Font="_eurostile 30px"
 		Text="???"
 		OnCommand="x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-15;shadowlength,0;zoom,0.5;diffuse,#FFFFFF;PlayCommand,Refresh"
 		RefreshCommand="%
