@@ -1,13 +1,14 @@
 <ActorFrame><children>
-	<Layer
-		Font="_eurostile 30px"
-		Text="Quickplay"
-		InitCommand="horizalign,center;shadowlength,0;diffusealpha,0;sleep,0.2;accelerate,0.6;diffusealpha,1"
-		GainFocusCommand="@'diffuse,'..DifficultyColor(1)..';zoom,1'"
-		LoseFocusCommand="zoom,0.8;diffuse,#FFFFFF"
-		DisabledCommand="Diffuse,0.5,0.5,0.5,1"
-		OffCommand="queuemessage,QuickPlayFade;linear,.5;diffusealpha,0;sleep,.3"
-	/>
+	<Layer File="_title/quickplay/color.png"
+		InitCommand="zoom,0.8;horizalign,center;shadowlength,0;diffusealpha,0;"
+		GainFocusCommand="finishtweening;decelerate,0.3;y,-50;diffusealpha,1;"
+		LoseFocusCommand="accelerate,0.3;y,-0;diffusealpha,0;"
+		DisabledCommand="Diffuse,0.5,0.5,0.5,1" />
+	<Layer File="_title/quickplay/gray.png"
+		InitCommand="zoom,0.8;horizalign,center;shadowlength,0;diffusealpha,0;sleep,0.3;accelerate,0.6;diffuse,1,1,1,0;"
+		GainFocusCommand="finishtweening;decelerate,0.3;y,-50;diffuse,1,1,1,0;"
+		LoseFocusCommand="accelerate,0.3;y,-0;diffuse,1,1,1,1;"
+		DisabledCommand="Diffuse,1,1,1,1" />
 	<!--<Layer Type="Quad" QPSelMessageCommand="hidden,0" QPDeSelMessageCommand="hidden,1" OnCommand="xy,SCREEN_CENTER_X,SCREEN_CENTER_Y;stretchto,0,0,SCREEN_WIDTH,SCREEN_HEIGHT;diffuse,0,0,0,0;"
 	QuickPlayFadeMessageCommand="diffusealpha,0;linear,.5;diffusealpha,1;" />-->
 	<Layer Type="BitmapText" File="_eurostile 30px" InitCommand="%function(self) ScreenTitleMenuTextSet(self) end" QPSelMessageCommand="hidden,0" QPDeSelMessageCommand="hidden,1" OnCommand="zoom,1;x,0;y,-SCREEN_CENTER_Y;diffusealpha,0;"

@@ -1,11 +1,12 @@
 <ActorFrame><children>
-	<Layer
-		Font="_eurostile 30px"
-		Text="Exit Game"
-		InitCommand="zoom,0.8;horizalign,center;shadowlength,0;diffusealpha,0;sleep,0.4;accelerate,0.6;diffusealpha,1"
-		GainFocusCommand="@'diffuse,'..DifficultyColor(1)..';zoom,1'"
-		LoseFocusCommand="zoom,0.8;diffuse,#FFFFFF"
-		DisabledCommand="Diffuse,0.5,0.5,0.5,1"
-		OffCommand="%TitleMenuOut"
-	/>
+	<Layer File="_title/exit/color.png"
+		InitCommand="zoom,0.8;horizalign,center;shadowlength,0;diffusealpha,0;"
+		GainFocusCommand="finishtweening;decelerate,0.3;y,-50;diffusealpha,1;"
+		LoseFocusCommand="accelerate,0.3;y,-0;diffusealpha,0;"
+		DisabledCommand="Diffuse,0.5,0.5,0.5,1" />
+	<Layer File="_title/exit/gray.png"
+		InitCommand="zoom,0.8;horizalign,center;shadowlength,0;diffusealpha,0;sleep,0.3;accelerate,0.6;diffuse,1,1,1,0;"
+		GainFocusCommand="finishtweening;decelerate,0.3;y,-50;diffuse,1,1,1,0;"
+		LoseFocusCommand="accelerate,0.3;y,-0;diffuse,1,1,1,1;"
+		DisabledCommand="Diffuse,1,1,1,1" />
 </children></ActorFrame>
