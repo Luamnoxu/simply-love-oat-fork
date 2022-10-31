@@ -217,6 +217,37 @@
 	    		if OatProfile().OATDisplayFriendZ == 6 then self:hidden(1) end
 		end"
 	/>
+	
+	<Layer File="400644a929e2645a6ec70c36d3be473d.wav" InitCommand="%function(self)
+		bbc = math.random(300,600)
+		bbc2 = math.random(0.1,1.5)
+		if bbc2 == 0 then
+		bbc2 = 0.3
+		end
+		for i=0,5 do
+			self:sleep(bbc)
+			self:queuecommand('FUCK')
+		end
+	end" 
+	 FUCKCommand="%function(self)
+	 	self:get():Play()
+		self:sleep(bbc2)
+		self:queuecommand('FUCK2')
+		end"
+	 FUCK2Command="%function(self) self:get():Stop()  end" />
+
+	<Layer File="../../Graphics/xbox.jpg" InitCommand="%function(self)
+	sex = bbc
+	ScrewdriverEpic3 = bbc2
+	self:diffusealpha(0)
+	self:stretchto(0,0,SCREEN_WIDTH,SCREEN_HEIGHT)
+	self:vibrate()
+	for i=0,5 do
+	self:sleep(sex)
+	self:diffusealpha(1)
+	self:sleep(ScrewdriverEpic3)
+	self:diffusealpha(0)
+	end end" />
 
 	<Layer
 		Type="Quad"
