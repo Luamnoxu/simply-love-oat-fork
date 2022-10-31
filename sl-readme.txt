@@ -123,18 +123,6 @@ Panzer
 Shizuka_japanese
 Sirin_turkish
 
-VOICES WITH QUESTIONABLE CONTENT:
-Charles - "ass" "whore" "bitch" 
-David - "pussy"
-Garrett - "fucK" "niggaz" "bitch"
-Jim - "nigger" "shit" "tits" "fuck"
-Matt - "fucking"
-Madame_Moisture - "bitches"
-Ryan - "retards"
-Sara - "mothafuckaa"
-Steven - "dick"
-Vospi - "fuckin"
-
 
 - Judgment Font - Each player can choose the judgment used during gameplay. Only the graphics are changed; zoom and animation are still controlled in the metrics and will be the same for every judgment graphic. Hold judgments are not changed, and neither are beginner judgments.
 

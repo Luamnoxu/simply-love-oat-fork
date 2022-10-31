@@ -9,7 +9,7 @@
 
 	<Layer
 		Type="Quad"
-		OnCommand="diffuse,#4d4d4d;stretchto,SCREEN_CENTER_X-(SCREEN_WIDTH*160/640+155),SCREEN_CENTER_Y-138-59-5,SCREEN_CENTER_X-(SCREEN_WIDTH*160/640-161),368;diffusealpha,0.4"
+		OnCommand="diffuse,#1f5f73;stretchto,SCREEN_CENTER_X-(SCREEN_WIDTH*160/640+155),SCREEN_CENTER_Y-138-59-5,SCREEN_CENTER_X-(SCREEN_WIDTH*160/640-161),368;diffusealpha,0.4"
 	/>		
 
 	
