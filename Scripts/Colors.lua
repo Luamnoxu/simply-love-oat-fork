@@ -96,10 +96,10 @@ function TextOnColor (n)
 	local color = Color() + 12
 	if n then color = color + n end
 	color = math.mod(color-1,12)+1
-	if color == 9 then return 0,0,0,1 end
-	if color == 10 then return 0,0,0,1 end
-	if color == 11 then return 0,0,0,1 end
-	if color == 12 then return 0,0,0,1 end
+	if color == 9 then return 1,1,1,1 end
+	if color == 10 then return 1,1,1,1 end
+	if color == 11 then return 1,1,1,1 end
+	if color == 12 then return 1,1,1,1 end
 	return 1,1,1,1
 end
 

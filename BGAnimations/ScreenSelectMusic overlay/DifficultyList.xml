@@ -1,10 +1,10 @@
 <ActorFrame><children>
 	<ActorFrame UpdateCommand="%DifficultyList" />
 	<Layer Type="ActorFrame" InitCommand="spin;effectmagnitude,180,0,0;effectperiod,1.0;effectclock,bgm"><children>
-		<Layer Condition="GAMESTATE:IsPlayerEnabled(PLAYER_1)" File="cursor p1" Command="x,-39;zoom,.8;bounce;effectmagnitude,-8,0,0;effectperiod,1.0;effectoffset,0.2;effectclock,bgm" />
+		
 	</children></Layer>
 	<Layer Type="ActorFrame" InitCommand="spin;effectmagnitude,180,0,0;effectperiod,1.0;effectclock,bgm"><children>
-		<Layer Condition="GAMESTATE:IsPlayerEnabled(PLAYER_2)" File="cursor p2" Command="x,235;zoom,.8;bounce;effectmagnitude,8,0,0;effectperiod,1.0;effectoffset,0.2;effectclock,bgm" />
+		
 	</children></Layer>
 	<Layer Type="ActorFrame" Command="zoomx,.64" ><children>
 	<CODE InitCommand = "%function()
@@ -17,25 +17,51 @@
 				return 'fuck' and 'shit'
 			end
 		end
-		function simpleDiffFetch2(pn,BakamitaikodomonanoneYumeoottekizutsuiteUsogahetanakuseniwaraenaiegaomisetaIloveyoumorokuniiwanaiKuchibetadehonmanibukiyouNanoninanonidoushiteSayonarawaietanoDamedanedameyodamenanoyoAntagasukidesukisugiteDoredaketsuyoiosakedemoYugamanaiomoidegabakamitai)
+		function simpleDiffFetch2(pn,baka)
 			local steps = GAMESTATE:GetCurrentSteps(pn)
-			local width = BakamitaikodomonanoneYumeoottekizutsuiteUsogahetanakuseniwaraenaiegaomisetaIloveyoumorokuniiwanaiKuchibetadehonmanibukiyouNanoninanonidoushiteSayonarawaietanoDamedanedameyodamenanoyoAntagasukidesukisugiteDoredaketsuyoiosakedemoYugamanaiomoidegabakamitai == true and 1 or 18
+			local width = baka == true and 1 or 18
 			if steps ~= nil then
 				local diff = steps:GetMeter()
-				if diff == 1 then return BakamitaikodomonanoneYumeoottekizutsuiteUsogahetanakuseniwaraenaiegaomisetaIloveyoumorokuniiwanaiKuchibetadehonmanibukiyouNanoninanonidoushiteSayonarawaietanoDamedanedameyodamenanoyoAntagasukidesukisugiteDoredaketsuyoiosakedemoYugamanaiomoidegabakamitai and 1 or 300 end
+				if diff == 1 then return baka and 1 or 300 end
 				return diff < 20 and width*diff or width*20
 			else
 				return ('fuck' and 'shit') and xero
 			end
 		end
 		function russianHotMix2017()
-			local song
+			local song = GAMESTATE:GetCurrentSong()
+			if not song then return false end
+
+			local allSteps = song:GetAllSteps()
+			 curSteps = GAMESTATE:GetCurrentSteps(0)
+			local curDiff = curSteps:GetDifficulty()
+			stepCount = #allSteps
+
+			top = false
+			bottom = false
+			
+			for i,v in ipairs(allSteps) do
+				if v == curSteps then
+					if i == 1 then
+						print('top')
+						top = true
+					end
+					if i == stepCount then
+						print('bottom')
+						bottom = true
+					end
+				end
+
+			end
+			return top, bottom
+		end
 	end"/>
 		
-		<Layer File="@'DifficultyList'..Color()..' 1x8.png'" InitCommand="aux,1" UpdateCommand="%function(self) self:valign(0.75) self:customtexturerect(0, 0, simpleDiffFetch2(0, true), 1/4) self:halign(0) self:SetWidth(simpleDiffFetch2(0)) self:diffuse(BubbleColorRGB(PLAYER_1)) self:zoomy(0.6) end" />
-
+		<Layer File="@'DifficultyList'..Color()..' 1x8.png'" InitCommand="aux,1" UpdateCommand="%function(self) russianHotMix2017() self:valign(0.75) self:customtexturerect(0, 0, simpleDiffFetch2(0, true), 1/4) self:halign(0) self:SetWidth(simpleDiffFetch2(0)) self:diffuse(BubbleColorRGB(PLAYER_1)) self:zoomy(0.6) end" />
+		<Layer File="_top" InitCommand="xy,98,-18;zoom,.8;bounce;effectmagnitude,0,-3,0;effectperiod,1.0;effectoffset,0.2;effectclock,bgm" UpdateCommand="%function(self) if top then self:diffusealpha(0) else self:diffusealpha(1) end  end" />
+		<Layer File="_bottom" InitCommand="xy,98,18;zoom,.8;bounce;effectmagnitude,0,3,0;effectperiod,1.0;effectoffset,0.2;effectclock,bgm" UpdateCommand="%function(self) if bottom then self:diffusealpha(0) else self:diffusealpha(1) end  end" />
 	</children></Layer>
 	
-	<Layer Font="_wendywhite numbers" Text="" InitCommand="aux,1" UpdateCommand="%function(self)  DifficultyListCommand(self,'meter') self:settext(simpleDiffFetch(PLAYER_1)) self:diffuse(BubbleColorRGB(PLAYER_1)) end" />
+	<Layer Font="_wendywhite numbers" Text="" InitCommand="aux,1" UpdateCommand="%function(self)  DifficultyListCommand(self,'meter') self:settext(simpleDiffFetch(PLAYER_1)) self:diffuse(BubbleColorRGB(PLAYER_1))  end" />
 
 </children></ActorFrame>
