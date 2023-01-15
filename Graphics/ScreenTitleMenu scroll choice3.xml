@@ -4,7 +4,7 @@
 		GainFocusCommand="finishtweening;decelerate,0.3;y,-20;diffusealpha,1;"
 		LoseFocusCommand="decelerate,0.3;y,-0;diffusealpha,0;"
 		DisabledCommand="Diffuse,0.5,0.5,0.5,1" />
-	<Layer File="_title/Settings/gray.png"
+	<Layer File="_title/Settings/color.png"
 		InitCommand="zoom,0.8;horizalign,center;shadowlength,0;diffusealpha,1;"
 		GainFocusCommand="finishtweening;decelerate,0.3;y,-20;diffuse,1,1,1,0;"
 		LoseFocusCommand="decelerate,0.3;y,-0;diffuse,1,1,1,1;"
