@@ -2139,7 +2139,7 @@ function DifficultyList()
             q = v:GetDifficulty() + 1
             if q < 6 then
                 difficultyList[q] = v
-            else
+            else -- List all edits difficulties because you can have multiple of them !
                 for k = 1, table.getn(steps) do
                     q = 5 + k
                     if not difficultyList[q] then
@@ -2333,7 +2333,7 @@ function DifficultyListRow(self, k, t, pn)
                 self:settext(s:GetMeter())
                 self:diffuse(DifficultyColorRGB(s:GetDifficulty()))
             end
-            if t == 'feet' then
+            if t == 'feet' then --mm feet
                 self:zoomy(z)
                 self:zoomx(math.min(s:GetMeter(), m) * z)
                 self:customtexturerect(0, (s:GetDifficulty() + 1) / 8,
