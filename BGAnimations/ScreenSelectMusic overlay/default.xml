@@ -15,6 +15,7 @@
 			OnCommand="y,-29;ShadowLength,0;diffuse,#FFFFFF;horizalign,right;zoom,0.5"
 			SetCommand="%function(self)
 			self:diffuse(BubbleColorText(PLAYER_2))
+			MESSAGEMAN:Broadcast('Color')
 			end"
 			CurrentSongChangedMessageCommand="playcommand,Set" 
 			CurrentStepsP2ChangedMessageCommand="playcommand,Set" 

@@ -356,7 +356,7 @@
         Ocean = self;
         self:hidden(0)
         self:GetShader():uniform2f('offsetBack',1.0,1.0)
-        self:GetShader():uniform1f('daytime', 0.9)
+        self:GetShader():uniform1f('daytime', 0.0)
         Ocean:GetShader():uniformTexture('colormap', colormap:GetTexture())
         Ocean:SetTexture(0, lightmap:GetTexture())
         Ocean:rotationx(-50) --plz keep it this way the depth adds alot
@@ -372,7 +372,10 @@
 				self:hidden(1)
 			end
 		end"
+	GrayMessageCommand="%function(self) self:GetShader():uniform1f('daytime', 0)  end"
+	ColorMessageCommand="%function(self) self:GetShader():uniform1f('daytime', 0.9)  end"
 />
+
 	
 	<Layer
 		Type="Quad"
