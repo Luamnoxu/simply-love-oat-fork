@@ -10,7 +10,7 @@
 		<Layer 
 			Type="BitmapText"
 			Condition="not GAMESTATE:IsCourseMode()"
-			Font="_misoreg small"
+			Font="_sanseriffic small"
 			Text="STEPS"
 			OnCommand="y,-29;ShadowLength,0;diffuse,#FFFFFF;horizalign,right;zoom,0.5"
 			SetCommand="%function(self)
@@ -21,7 +21,7 @@
 			CurrentStepsP2ChangedMessageCommand="playcommand,Set" 
 		/>
 		<Layer 
-		   Font="_misobold small"
+		   Font="_sanseriffic Bold small"
 			Text="???" 
 			OnCommand="y,-29;x,5;zoom,0.5;shadowlength,0;horizalign,left;maxwidth,250" 
 			SetCommand="%function(self) self:settext(GetStepsDescriptionText(PLAYER_1)) self:diffuse(BubbleColorText(PLAYER_1)) end" 
@@ -48,7 +48,7 @@
 		<Layer
 			Type="BitmapText"
 			Text="INSUFFICIENT TIME"
-			File="_misobold small"
+			File="_sanseriffic Bold small"
 			InitCommand="zoom,.5;shadowlength,0;addx,2;addy,-2"
 			OnCommand="%function(self) self:diffuse(1,1,1,1) end"
 			OffCommand="linear,0.2;diffusealpha,0"

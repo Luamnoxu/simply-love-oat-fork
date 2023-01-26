@@ -32,7 +32,7 @@
 
 		<Layer
 			Type="BitmapText"
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			OnCommand="shadowlength,1;maxwidth,500;y,-24;zoom,.55;diffuse,#FFFFFF"
 			InitCommand="animate,0;queuecommand,Update"
 			CurrentSongChangedMessageCommand="queuecommand,Update"
@@ -40,7 +40,7 @@
 		/>
 		<Layer 
 			Type="BitmapText"
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			OnCommand="y,87;zoom,.5;shadowlength,1;diffuse,#FFFFFF"
 			InitCommand="animate,0;playcommand,Update"
 			UpdateCommand="%function(self) SongOptionsLabel(self) end"
@@ -71,14 +71,14 @@
 				end"
 		/>
 		<Layer 
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			Text="???" 
 			OnCommand="x,25;y,2;zoom,0.4;shadowlength,0;horizalign,left;maxwidth,240;queuecommand,Set" 
 			SetCommand="%function(self) self:settext(P1Difficulty) end" 
 		/>		
 		<Layer 
 			Condition="not GAMESTATE:IsCourseMode()"
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			Text="???" 
 			OnCommand="x,25;y,-12;zoom,0.4;shadowlength,0;horizalign,left;maxwidth,240;queuecommand,Set" 
 			SetCommand="%function(self) self:settext(GetStepsDescriptionText(PLAYER_1)) end" 
@@ -109,14 +109,14 @@
 				end"
 		/>
 		<Layer 
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			Text="???" 
 			OnCommand="x,-25;y,2;zoom,0.4;shadowlength,0;horizalign,right;maxwidth,240;queuecommand,Set" 
 			SetCommand="%function(self) self:settext(P2Difficulty) end" 
 		/>
 		<Layer 
 			Condition="not GAMESTATE:IsCourseMode()"
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			Text="???" 
 			OnCommand="x,-25;y,-12;zoom,0.4;shadowlength,0;horizalign,right;maxwidth,240;queuecommand,Set" 
 			SetCommand="%function(self) self:settext(GetStepsDescriptionText(PLAYER_2)) end" 

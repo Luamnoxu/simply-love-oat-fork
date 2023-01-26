@@ -1,6 +1,6 @@
 <ActorFrame> <children>
 	<Layer Type="ActorFrame" OnCommand="x,65;y,-97"> <children>
-		<Layer Type="BitmapText" Font="_misobold white" Text="Fanta"	
+		<Layer Type="BitmapText" Font="_sanseriffic Bold white" Text="Fanta"	
 		InitCommand="%function(self)
 		    sorae_fuck1a = 1
 			self:queuecommand('Update')
@@ -47,7 +47,7 @@
             end; 
             sorae_fuck1a = -sorae_fuck1a 
         end"/>
-		<Layer Type="BitmapText" Font="_misobold white" Text="Exclennet"	
+		<Layer Type="BitmapText" Font="_sanseriffic Bold white" Text="Exclennet"	
 		InitCommand="%function(self) sorae_fuck1b = 1; self:queuecommand('Update'); end" 
 		UpdateCommand="%function(self)
 		    if OatProfile().OATResultText == 3 then self:settext('EXCELLENT')
@@ -65,14 +65,14 @@
             end; 
             sorae_fuck1b = -sorae_fuck1b
         end"/>
-		<Layer Type="BitmapText" Font="_misobold white" Text='"Great"'
+		<Layer Type="BitmapText" Font="_sanseriffic Bold white" Text='"Great"'
 		InitCommand="y,27*2;zoom,0.35;diffuse,0.2745098039215686,0.8901960784313725,0.0313725490196078,1;horizalign,right;ShadowLength,1;"
 		OnCommand="%function(self)
 		    if OatProfile().OATResultText == 3 then self:settext('GREAT')
 		    elseif OatProfile().OATResultText == 2 then self:zoom(0);self:sleep(1.5);self:decelerate(0.5);self:zoom(0.35);
 		    end
 		end" />
-		<Layer Type="BitmapText" Font="_misobold white" Text="Decent"
+		<Layer Type="BitmapText" Font="_sanseriffic Bold white" Text="Decent"
 		InitCommand="y,27*3;zoom,0.35;diffuse,0.6352941176470588,0.0392156862745098,0.9529411764705882,1;horizalign,right;ShadowLength,1;"
 		OnCommand="%function(self)
 		    self:queuecommand('Update');
@@ -81,7 +81,7 @@
 		    end
 		end"
 		UpdateCommand="%function(self) if SCREENMAN:GetTopScreen():GetChild('GoodNumberP1'):GetText() == '   0' then self:diffuse(.5,.5,.5,.5) end end" />
-		<Layer Type="BitmapText" Font="_misobold white" Text="Way Off"
+		<Layer Type="BitmapText" Font="_sanseriffic Bold white" Text="Way Off"
 		InitCommand="y,27*4;zoom,0.35;diffuse,0.9803921568627451,0.4784313725490196,0.0156862745098039,1;horizalign,right;ShadowLength,1;"
 		OnCommand="%function(self)
 		    self:queuecommand('Update');
@@ -90,7 +90,7 @@
 		    end
 		end"
 		UpdateCommand="%function(self) if SCREENMAN:GetTopScreen():GetChild('BooNumberP1'):GetText() == '   0' then self:diffuse(.5,.5,.5,.5) end end" />
-		<Layer Type="BitmapText" Font="_misobold white" Text="FUCK"
+		<Layer Type="BitmapText" Font="_sanseriffic Bold white" Text="FUCK"
 		InitCommand="y,27*5;zoom,0.35;diffuse,0.9647058823529412,0.0313725490196078,0.0313725490196078,1;horizalign,right;ShadowLength,1;"
 		OnCommand="%function(self)
 		    if OatProfile().OATResultText == 3 then self:settext('MISS')
@@ -99,10 +99,10 @@
 		end" />
 	</children> </Layer>
 	<Layer Type="ActorFrame" OnCommand="x,-110;y,-97"> <children>
-		<Layer Type="BitmapText" Font="_misobold white" Text="Holds"		OnCommand="y,27*2;zoom,0.35;diffuse,0.0235294117647059,0.9725490196078431,0.7490196078431373,1;horizalign,right;ShadowLength,1" />
-		<Layer Type="BitmapText" Font="_misobold white" Text="Mines"		OnCommand="y,27*3;zoom,0.35;diffuse,0.6235294117647059,0.6274509803921569,0.603921568627451,1;horizalign,right;ShadowLength,1" />
-		<Layer Type="BitmapText" Font="_misobold white" Text="Hands"		OnCommand="y,27*4;zoom,0.35;diffuse,1,1,1,1;horizalign,right;ShadowLength,1" />
-		<Layer Type="BitmapText" Font="_misobold white" Text="Rolls"		OnCommand="y,27*5;zoom,0.35;diffuse,0.0274509803921569,0.6117647058823529,0.2235294117647059,1;horizalign,right;ShadowLength,1" />
+		<Layer Type="BitmapText" Font="_sanseriffic Bold white" Text="Holds"		OnCommand="y,27*2;zoom,0.35;diffuse,0.0235294117647059,0.9725490196078431,0.7490196078431373,1;horizalign,right;ShadowLength,1" />
+		<Layer Type="BitmapText" Font="_sanseriffic Bold white" Text="Mines"		OnCommand="y,27*3;zoom,0.35;diffuse,0.6235294117647059,0.6274509803921569,0.603921568627451,1;horizalign,right;ShadowLength,1" />
+		<Layer Type="BitmapText" Font="_sanseriffic Bold white" Text="Hands"		OnCommand="y,27*4;zoom,0.35;diffuse,1,1,1,1;horizalign,right;ShadowLength,1" />
+		<Layer Type="BitmapText" Font="_sanseriffic Bold white" Text="Rolls"		OnCommand="y,27*5;zoom,0.35;diffuse,0.0274509803921569,0.6117647058823529,0.2235294117647059,1;horizalign,right;ShadowLength,1" />
 	</children> </Layer>
 </children> </ActorFrame>
 

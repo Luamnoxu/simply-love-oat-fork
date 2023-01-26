@@ -23,7 +23,7 @@
 		/>
 		<BitmapText
 			Text="Press [ESC]::for Edit Menu::::Press [F1]::for Help Menu::::Press [ENTER]::for Area Menu"
-			Font="_misoreg white"
+			Font="_sanseriffic white"
 			InitCommand="ShadowLength,0;zoom,0.35;horizalign,left;x,SCREEN_LEFT+20;y,SCREEN_CENTER_Y"
 			OnCommand=""
 			OffCommand=""

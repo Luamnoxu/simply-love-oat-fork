@@ -6,7 +6,7 @@
 	<Layer
 		Type="BitmapText"
 		Text="COUNTS AS 2 ROUNDS"
-		File="_misobold small"
+		File="_sanseriffic Bold small"
 		InitCommand="zoom,.5;shadowlength,0;addx,2;addy,-2"
 		OnCommand="%function(self) self:diffuse(TextOnColor(-1)) end"
 		OffCommand="linear,0.2;diffusealpha,0"

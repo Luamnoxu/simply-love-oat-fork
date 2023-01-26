@@ -980,24 +980,24 @@ end"><children>
 			end)
 		end"><children>
 			<Layer Type="Quad" InitCommand="xywh,0,0,2,oplot_plotHeight-4;diffusealpha,.2"/>
-			<Layer Type="BitmapText" File="_misoreg small" Text="R" InitCommand="xy,2,-oplot_plotHeight/3-6;diffusealpha,.2;vertalign,top;zoom,0.5;horizalign,left"/>
+			<Layer Type="BitmapText" File="_sanseriffic small" Text="R" InitCommand="xy,2,-oplot_plotHeight/3-6;diffusealpha,.2;vertalign,top;zoom,0.5;horizalign,left"/>
 		</children></Layer>
 
 		<!-- Early/late markers -->
-		<Layer Type="BitmapText" File="_misoreg small"
+		<Layer Type="BitmapText" File="_sanseriffic small"
 			OnCommand="xy,oplot_plotWidth/2,-oplot_plotHeight/2-6;shadowlength,0;zoom,0.4;diffusealpha,.2;horizalign,right;vertalign,top;queuecommand,DoText"
 			DoTextCommand="%function(self)
 				self:settext('Late (+'..oplot_maxOffset..'ms)')
 			end"
 		/>
-		<Layer Type="BitmapText" File="_misoreg small"
+		<Layer Type="BitmapText" File="_sanseriffic small"
 			OnCommand="xy,oplot_plotWidth/2,oplot_plotHeight/2-6;shadowlength,0;zoom,0.4;diffusealpha,.2;horizalign,right;vertalign,bottom;queuecommand,DoText"
 			DoTextCommand="%function(self)
 				self:settext('Early (-'..oplot_maxOffset..'ms)')
 			end"
 		/>
 		
-		<Layer Type="BitmapText" Text="" Font="_misoreg small"
+		<Layer Type="BitmapText" Text="" Font="_sanseriffic small"
 		UpdateSpellDisplayP1MessageCommand="%function(self)
 			local pn = 1
 			if curcard[pn] == 0 then
@@ -1025,7 +1025,7 @@ end"><children>
 			
 		end" />
 		
-		<Layer Type="BitmapText" Text="" Font="_misoreg small"
+		<Layer Type="BitmapText" Text="" Font="_sanseriffic small"
 		UpdateSpellDisplayP1MessageCommand="%function(self)
 			local pn = 1
 			if curcard[pn] == 0 then
@@ -1050,7 +1050,7 @@ end"><children>
 			
 		end" />
 		
-		<Layer Type="BitmapText" Text="" Font="_misoreg small"
+		<Layer Type="BitmapText" Text="" Font="_sanseriffic small"
 		    OnCommand="%function(self)
 			    self:hidden(0)
 			    self:xy(150,-128)
@@ -1864,24 +1864,24 @@ end"><children>
 			end)
 		end"><children>
 			<Layer Type="Quad" InitCommand="xywh,0,0,2,oplot_plotHeight;diffusealpha,.2"/>
-			<Layer Type="BitmapText" File="_misoreg small" Text="R" InitCommand="xy,2,-oplot_plotHeight/2-6;diffusealpha,.2;vertalign,top;zoom,0.5;horizalign,left"/>
+			<Layer Type="BitmapText" File="_sanseriffic small" Text="R" InitCommand="xy,2,-oplot_plotHeight/2-6;diffusealpha,.2;vertalign,top;zoom,0.5;horizalign,left"/>
 		</children></Layer>
 
 		<!-- Early/late markers -->
-		<Layer Type="BitmapText" File="_misoreg small"
+		<Layer Type="BitmapText" File="_sanseriffic small"
 			OnCommand="xy,oplot_plotWidth/2,-oplot_plotHeight/2-6;shadowlength,0;zoom,0.4;diffusealpha,.2;horizalign,right;vertalign,top;queuecommand,DoText"
 			DoTextCommand="%function(self)
 				self:settext('Late (+'..oplot_maxOffset..'ms)')
 			end"
 		/>
-		<Layer Type="BitmapText" File="_misoreg small"
+		<Layer Type="BitmapText" File="_sanseriffic small"
 			OnCommand="xy,oplot_plotWidth/2,oplot_plotHeight/2-6;shadowlength,0;zoom,0.4;diffusealpha,.2;horizalign,right;vertalign,bottom;queuecommand,DoText"
 			DoTextCommand="%function(self)
 				self:settext('Early (-'..oplot_maxOffset..'ms)')
 			end"
 		/>
 		
-		<Layer Type="BitmapText" Text="" Font="_misoreg small"
+		<Layer Type="BitmapText" Text="" Font="_sanseriffic small"
 		UpdateSpellDisplayP2MessageCommand="%function(self)
 			local pn = 2
 			if curcard[pn] == 0 then
@@ -1909,7 +1909,7 @@ end"><children>
 			
 		end" />
 		
-		<Layer Type="BitmapText" Text="" Font="_misoreg small"
+		<Layer Type="BitmapText" Text="" Font="_sanseriffic small"
 		UpdateSpellDisplayP2MessageCommand="%function(self)
 			local pn = 2
 			if curcard[pn] == 0 then
@@ -1934,7 +1934,7 @@ end"><children>
 			
 		end" />
 		
-		<Layer Type="BitmapText" Text="" Font="_misoreg small"
+		<Layer Type="BitmapText" Text="" Font="_sanseriffic small"
 		    OnCommand="%function(self)
 			    self:hidden(0)
 			    self:xy(-150,-128)

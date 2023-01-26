@@ -32,19 +32,19 @@
 	
 	<Layer 
 		Type="BitmapText"
-		Font="_misoreg small"
+		Font="_sanseriffic small"
 		Text="ARTIST"
 		OnCommand="horizalign,right;ShadowLength,0;diffuse,#FFFFFF66;zoom,0.5;x,SCREEN_CENTER_X-(SCREEN_WIDTH*160/640+105);y,180"
 	/>
 	<Layer 
 		Type="BitmapText"
-		Font="_misoreg small"
+		Font="_sanseriffic small"
 		Text="BPM"
 		OnCommand="horizalign,right;ShadowLength,0;diffuse,#FFFFFF66;zoom,0.5;x,SCREEN_CENTER_X-(SCREEN_WIDTH*160/640+105);y,200"
 	/>
 	<Layer 
 		Type="BitmapText"
-		Font="_misoreg small"
+		Font="_sanseriffic small"
 		Text="LENGTH"
 		OnCommand="ShadowLength,0;diffuse,#FFFFFF66;zoom,0.5;x,SCREEN_CENTER_X-(SCREEN_WIDTH*160/640);y,200"
 	/>

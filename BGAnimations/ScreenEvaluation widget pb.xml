@@ -19,7 +19,7 @@ end"> <children>
 	> <children>
 		
 		<Layer 
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			Text="" 
 			OnCommand="x,130;y,64;zoom,.45;shadowlength,0;horizalign,right;maxwidth,240;sleep,0.5;queuecommand,Set" 
 			SetCommand="%function(self)
@@ -59,7 +59,7 @@ end"> <children>
 	> <children>
 		
 		<Layer 
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			Text="" 
 			OnCommand="x,-3;y,64;zoom,.45;shadowlength,0;horizalign,right;maxwidth,240;sleep,0.5;queuecommand,Set" 
 			SetCommand="%function(self)

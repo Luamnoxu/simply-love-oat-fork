@@ -1,7 +1,7 @@
 <ActorFrame><children>
 	<BitampText
 		Text="Play longer, but look out::for scripted modifiers"
-		File="_misoreg small"
+		File="_sanseriffic small"
 		InitCommand="zoom,0.7;shadowlength,0"
 		GainFocusCommand="hidden,0;finishtweening;cropright,1;linear,0.5;cropright,0"
 		LoseFocusCommand="hidden,1"

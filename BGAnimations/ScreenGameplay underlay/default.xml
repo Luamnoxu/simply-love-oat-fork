@@ -35,7 +35,7 @@
 		/>
 		<Layer
 			Class="BitmapText"
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			Text="left!"
 			OnCommand="shadowlength,0;y,-106;diffusealpha,0;maxwidth,70"
 			NoteCrossedLeftMessageCommand="finishtweening;diffusealpha,1;zoom,1.4;linear,0.2;zoom,1;sleep,0.4;diffusealpha,0"
@@ -43,7 +43,7 @@
 		/>
 		<Layer
 			Class="BitmapText"
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			Text="right!"
 			OnCommand="shadowlength,0;y,-106;diffusealpha,0;maxwidth,70"
 			NoteCrossedRightMessageCommand="finishtweening;diffusealpha,1;zoom,1.4;linear,0.2;zoom,1;sleep,0.4;diffusealpha,0"
@@ -51,7 +51,7 @@
 		/>
 		<Layer
 			Class="BitmapText"
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			Text="up!"
 			OnCommand="shadowlength,0;y,-106;diffusealpha,0;maxwidth,70"
 			NoteCrossedUpMessageCommand="finishtweening;diffusealpha,1;zoom,1.4;linear,0.2;zoom,1;sleep,0.4;diffusealpha,0"
@@ -59,7 +59,7 @@
 		/>
 		<Layer
 			Class="BitmapText"
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			Text="down!"
 			OnCommand="shadowlength,0;y,-106;diffusealpha,0;maxwidth,70"
 			NoteCrossedDownMessageCommand="finishtweening;diffusealpha,1;zoom,1.4;linear,0.2;zoom,1;sleep,0.4;diffusealpha,0"
@@ -67,7 +67,7 @@
 		/>
 		<Layer
 			Class="BitmapText"
-			Font="_misobold small"
+			Font="_sanseriffic Bold small"
 			Text="Jump!"
 			OnCommand="shadowlength,0;y,-106;diffusealpha,0;maxwidth,70"
 			NoteCrossedJumpMessageCommand="finishtweening;diffusealpha,1;zoom,1.4;linear,0.2;zoom,1;sleep,0.4;diffusealpha,0"
@@ -197,7 +197,7 @@
 
 		<Layer
 			Type="BitmapText"
-			Font="_misobold white"
+			Font="_sanseriffic Bold white"
 			OnCommand="y,-5;zoom,0.35;shadowlength,0;maxwidth,840;zoomx,0.35/((SCREEN_WIDTH/SCREEN_HEIGHT)/(4/3))"
 			InitCommand="animate,0;playcommand,Update"
 			CurrentSongChangedMessageCommand="playcommand,UpdateTitle"
@@ -279,14 +279,14 @@
 		end" 
 	/>
 	<Layer
-		Font="_misobold white"
+		Font="_sanseriffic Bold white"
 		Text=""
 		InitCommand="x,SCREEN_CENTER_X;y,SCREEN_TOP+40;zoom,.7;shadowlength,0"
 		OnCommand="queuecommand,Update"
 		UpdateCommand="%GameplayBPM"
 	/>
 	<Layer
-		Font="_misobold white"
+		Font="_sanseriffic Bold white"
 		Text=""
 		InitCommand="x,SCREEN_CENTER_X;y,SCREEN_TOP+66;zoom,.3;shadowlength,0"
 		OnCommand="queuecommand,Update"
