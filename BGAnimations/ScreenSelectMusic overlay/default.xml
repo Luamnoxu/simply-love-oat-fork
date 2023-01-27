@@ -101,43 +101,9 @@
 			end
 		end"
 	/>
-	<Layer
-		File="friends/groove.gif"
-		OnCommand="%function(self)
-			self:x(120)
-			self:y(SCREEN_BOTTOM-80)
-			
-			local friends = {
-				{'mushroom_boy.png', 0.2},
-				{'glue.png',0.5},
-				{'fromgus.png',0.3}
-				}
-	    		math.randomseed(math.random() * 1000000 + Second() * Hour() * DayOfYear())
-	    		local s = friends[math.random(1, #friends)]
-			self:Load(Path('BGAnimations', 'ScreenSelectMusic overlay/friends/' .. s[1]))
-
-			  self:effectperiod(4)
-
-			if not s[3] then -- I'm sorry
-				self:effectclock('bgm')
-			end
-			
-			-- scaling nonsense
-			
-			local tw, th = 96, 96 -- target
-			local tex = self:GetTexture()
-			local w, h = tex:GetSourceWidth(), tex:GetSourceHeight()		
-			local size = (th / h)
-			self:zoom(size)
-			
-	    		self:diffusealpha(0.2)
-	    		self:texturefiltering(true)
-	    		
-	    		if OatProfile().OATDisplayFriendZ == 6 then self:hidden(1) end
-		end"
-	/>
+	
 	<Layer Type="Quad" OnCommand="skewx,-SCREEN_HEIGHT/(5.5/2);zoomto,1,SCREEN_HEIGHT;x,SCREEN_CENTER_X*1.082;y,SCREEN_CENTER_Y;diffuse,0.2,0.4,0.6,0.2" />
 	<Layer Type="Quad" OnCommand="skewx,-SCREEN_HEIGHT/(5.5/2);zoomto,1,SCREEN_HEIGHT;x,SCREEN_WIDTH*1.039;y,SCREEN_CENTER_Y;diffuse,0.2,0.4,0.6,0.2" />
-	
+	<Layer File="frame" OnCommand="xy,SCREEN_CENTER_X-(SCREEN_WIDTH*160/640-3),SCREEN_CENTER_Y-138;zoomto,306,119;" />
 </children> </ActorFrame>
 
