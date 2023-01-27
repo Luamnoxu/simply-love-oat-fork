@@ -43,11 +43,9 @@
 			for i,v in ipairs(allSteps) do
 				if v == curSteps then
 					if i == 1 then
-						print('top')
 						top = true
 					end
 					if i == stepCount then
-						print('bottom')
 						bottom = true
 					end
 				end
