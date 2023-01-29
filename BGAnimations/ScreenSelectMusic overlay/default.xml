@@ -102,8 +102,8 @@
 		end"
 	/>
 	
-	<Layer Type="Quad" OnCommand="skewx,-SCREEN_HEIGHT/(5.5/2);zoomto,1,SCREEN_HEIGHT;x,SCREEN_CENTER_X*1.082;y,SCREEN_CENTER_Y;diffuse,0.2,0.4,0.6,0.2" />
-	<Layer Type="Quad" OnCommand="skewx,-SCREEN_HEIGHT/(5.5/2);zoomto,1,SCREEN_HEIGHT;x,SCREEN_WIDTH*1.039;y,SCREEN_CENTER_Y;diffuse,0.2,0.4,0.6,0.2" />
+	<Layer Type="Quad" OnCommand="skewto,-175;zoomto,1,SCREEN_HEIGHT;x,SCREEN_CENTER_X*1.082;y,SCREEN_CENTER_Y;diffuse,0.2,0.4,0.6,0.2" />
+	<Layer Type="Quad" OnCommand="skewto,-175;zoomto,1,SCREEN_HEIGHT;x,SCREEN_WIDTH*1.039;y,SCREEN_CENTER_Y;diffuse,0.2,0.4,0.6,0.2" />
 	<Layer File="frame" OnCommand="xy,SCREEN_CENTER_X-(SCREEN_WIDTH*160/640-3),SCREEN_CENTER_Y-138;zoomto,306,119;" />
 </children> </ActorFrame>
 
