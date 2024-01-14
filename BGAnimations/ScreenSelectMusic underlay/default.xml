@@ -39,219 +39,491 @@
 				<Layer File="radial"/>
 				<Layer File="bubbles.png" InitCommand="hidden,0;" />
 				<Layer File="zigzag.png" InitCommand="hidden,0;" />
+				<Layer Type="Quad" InitCommand="hidden,1" />
 			</children></Layer>
 		</children></Layer>
 			<Layer OnCommand="hidden,1;stretchto,0,0,SCREEN_WIDTH,SCREEN_HEIGHT;diffusealpha,0;"
-			CurrentSongChangedMessageCommand="%function(self) self:queuecommand('epic') end"
-	epicCommand="%function(self)
-		--mirin
-			local y_faithl = {}
-			local ym_faithl = {}
-			local y_faithr = {}
-			local ym_faithr = {}
-			local scx = SCREEN_CENTER_X
-			local scy = SCREEN_CENTER_Y
-			local sw = SCREEN_WIDTH
-			local sh = SCREEN_HEIGHT
-			local sqrt = math.sqrt
+			CurrentSongChangedMessageCommand="%function(self) 
+				
+				local epicaux = self:GetParent():GetChildAt(2):GetChildAt(0):GetChildAt(4)
 
-			local sin = math.sin
-			local asin = math.asin
-			local cos = math.cos
-			local pow = math.pow
-			local exp = math.exp
-			local pi = math.pi
-			local abs = math.abs
+				--mirin
 
-			flip = setmetatable({}, {
-				__call = function(self, fn)
-					self[fn] = self[fn] or function(x) return 1 - fn(x) end
-					return self[fn]
-				end
-			})
+					local scx = SCREEN_CENTER_X
+					local scy = SCREEN_CENTER_Y
+					local sw = SCREEN_WIDTH
+					local sh = SCREEN_HEIGHT
+					local sqrt = math.sqrt
 
-			function with1param(fn, defaultparam1)
-				local function params(param1) return function(x) return fn(x, param1) end end
-				return setmetatable({params = params, param = params}, {
-					__call = function(self, x, param1)
-						return fn(x, param1 or defaultparam1)
+					local sin = math.sin
+					local asin = math.asin
+					local cos = math.cos
+					local pow = math.pow
+					local exp = math.exp
+					local pi = math.pi
+					local abs = math.abs
+
+					flip = setmetatable({}, {
+						__call = function(self, fn)
+							self[fn] = self[fn] or function(x) return 1 - fn(x) end
+							return self[fn]
+						end
+					})
+
+					function with1param(fn, defaultparam1)
+						local function params(param1) return function(x) return fn(x, param1) end end
+						return setmetatable({params = params, param = params}, {
+							__call = function(self, x, param1)
+								return fn(x, param1 or defaultparam1)
+							end
+						})
 					end
-				})
-			end
 
-			function with2params(fn, defaultparam1, defaultparam2)
-				local function params(param1, param2)
-					return function(x) return fn(x, param1, param2) end
-				end
-				return setmetatable({params = params, param = params}, {
-					__call = function(self, x, param1, param2)
-						return fn(x, param1 or defaultparam1, param2 or defaultparam2)
+					function with2params(fn, defaultparam1, defaultparam2)
+						local function params(param1, param2)
+							return function(x) return fn(x, param1, param2) end
+						end
+						return setmetatable({params = params, param = params}, {
+							__call = function(self, x, param1, param2)
+								return fn(x, param1 or defaultparam1, param2 or defaultparam2)
+							end
+						})
 					end
-				})
-			end
-			function bounce(t) return 4 * t * (1 - t) end
-			function tri(t) return 1 - abs(2 * t - 1) end
-			function bell(t) return inOutQuint(tri(t)) end
-			function pop(t) return 3.5 * (1 - t) * (1 - t) * sqrt(t) end
-			function tap(t) return 3.5 * t * t * sqrt(1 - t) end
-			function pulse(t) return t < .5 and tap(t * 2) or -pop(t * 2 - 1) end
+					function bounce(t) return 4 * t * (1 - t) end
+					function tri(t) return 1 - abs(2 * t - 1) end
+					function bell(t) return inOutQuint(tri(t)) end
+					function pop(t) return 3.5 * (1 - t) * (1 - t) * sqrt(t) end
+					function tap(t) return 3.5 * t * t * sqrt(1 - t) end
+					function pulse(t) return t < .5 and tap(t * 2) or -pop(t * 2 - 1) end
 
-			function spike(t) return exp(-10 * abs(2 * t - 1)) end
-			function inverse(t) return t * t * (1 - t) * (1 - t) / (0.5 - t) end
+					function spike(t) return exp(-10 * abs(2 * t - 1)) end
+					function inverse(t) return t * t * (1 - t) * (1 - t) / (0.5 - t) end
 
-			local function popElasticInternal(t, damp, count)
-				return (1000 ^ -(t ^ damp) - 0.001) * sin(count * pi * t)
-			end
+					local function popElasticInternal(t, damp, count)
+						return (1000 ^ -(t ^ damp) - 0.001) * sin(count * pi * t)
+					end
 
-			local function tapElasticInternal(t, damp, count)
-				return (1000 ^ -((1 - t) ^ damp) - 0.001) * sin(count * pi * (1 - t))
-			end
+					local function tapElasticInternal(t, damp, count)
+						return (1000 ^ -((1 - t) ^ damp) - 0.001) * sin(count * pi * (1 - t))
+					end
 
-			local function pulseElasticInternal(t, damp, count)
-				if t < .5 then
-					return tapElasticInternal(t * 2, damp, count)
+					local function pulseElasticInternal(t, damp, count)
+						if t < .5 then
+							return tapElasticInternal(t * 2, damp, count)
+						else
+							return -popElasticInternal(t * 2 - 1, damp, count)
+						end
+					end
+
+					popElastic = with2params(popElasticInternal, 1.4, 6)
+					tapElastic = with2params(tapElasticInternal, 1.4, 6)
+					pulseElastic = with2params(pulseElasticInternal, 1.4, 6)
+
+					impulse = with1param(function(t, damp)
+						t = t ^ damp
+						return t * (1000 ^ -t - 0.001) * 18.6
+					end, 0.9)
+
+					function instant() return 1 end
+					function linear(t) return t end
+					function inQuad(t) return t * t end
+					function outQuad(t) return -t * (t - 2) end
+					function inOutQuad(t)
+						t = t * 2
+						if t < 1 then
+							return 0.5 * t ^ 2
+						else
+							return 1 - 0.5 * (2 - t) ^ 2
+						end
+					end
+					function inCubic(t) return t * t * t end
+					function outCubic(t) return 1 - (1 - t) ^ 3 end
+					function inOutCubic(t)
+						t = t * 2
+						if t < 1 then
+							return 0.5 * t ^ 3
+						else
+							return 1 - 0.5 * (2 - t) ^ 3
+						end
+					end
+					function inQuart(t) return t * t * t * t end
+					function outQuart(t) return 1 - (1 - t) ^ 4 end
+					function inOutQuart(t)
+						t = t * 2
+						if t < 1 then
+							return 0.5 * t ^ 4
+						else
+							return 1 - 0.5 * (2 - t) ^ 4
+						end
+					end
+					function inQuint(t) return t ^ 5 end
+					function outQuint(t) return 1 - (1 - t) ^ 5 end
+					function inOutQuint(t)
+						t = t * 2
+						if t < 1 then
+							return 0.5 * t ^ 5
+						else
+							return 1 - 0.5 * (2 - t) ^ 5
+						end
+					end
+					function inExpo(t) return 1000 ^ (t - 1) - 0.001 end
+					function outExpo(t) return 1.001 - 1000 ^ -t end
+					function inOutExpo(t)
+						t = t * 2
+						if t < 1 then
+							return 0.5 * 1000 ^ (t - 1) - 0.0005
+						else
+							return 1.0005 - 0.5 * 1000 ^ (1 - t)
+						end
+					end
+					function inCirc(t) return 1 - sqrt(1 - t * t) end
+					function outCirc(t) return sqrt(-t * t + 2 * t) end
+					function inOutCirc(t)
+						t = t * 2
+						if t < 1 then
+							return 0.5 - 0.5 * sqrt(1 - t * t)
+						else
+							t = t - 2
+							return 0.5 + 0.5 * sqrt(1 - t * t)
+						end
+					end
+
+					function outBounce(t)
+						if t < 1 / 2.75 then
+							return 7.5625 * t * t
+						elseif t < 2 / 2.75 then
+							t = t - 1.5 / 2.75
+							return 7.5625 * t * t + 0.75
+						elseif t < 2.5 / 2.75 then
+							t = t - 2.25 / 2.75
+							return 7.5625 * t * t + 0.9375
+						else
+							t = t - 2.625 / 2.75
+							return 7.5625 * t * t + 0.984375
+						end
+					end
+					function inBounce(t) return 1 - outBounce(1 - t) end
+					function inOutBounce(t)
+						if t < 0.5 then
+							return inBounce(t * 2) * 0.5
+						else
+							return outBounce(t * 2 - 1) * 0.5 + 0.5
+						end
+					end
+
+					function inSine(x) return 1 - cos(x * (pi * 0.5)) end
+
+					function outSine(x) return sin(x * (pi * 0.5)) end
+
+					function inOutSine(x) return 0.5 - 0.5 * cos(x * pi) end
+
+					function outElasticInternal(t, a, p)
+						return a * pow(2, -10 * t) *
+								sin((t - p / (2 * pi) * asin(1 / a)) * 2 * pi / p) + 1
+					end
+					local function inElasticInternal(t, a, p)
+						return 1 - outElasticInternal(1 - t, a, p)
+					end
+					function inOutElasticInternal(t, a, p)
+						return t < 0.5 and 0.5 * inElasticInternal(t * 2, a, p) or 0.5 + 0.5 *
+								outElasticInternal(t * 2 - 1, a, p)
+					end
+
+					inElastic = with2params(inElasticInternal, 1, 0.3)
+					outElastic = with2params(outElasticInternal, 1, 0.3)
+					inOutElastic = with2params(inOutElasticInternal, 1, 0.3)
+
+					function inBackInternal(t, a) return t * t * (a * t + t - a) end
+					function outBackInternal(t, a)
+						t = t - 1
+						return t * t * ((a + 1) * t + a) + 1
+					end
+					function inOutBackInternal(t, a)
+						return t < 0.5 and 0.5 * inBackInternal(t * 2, a) or 0.5 + 0.5 *
+								outBackInternal(t * 2 - 1, a)
+					end
+
+					inBack = with1param(inBackInternal, 1.70158)
+					outBack = with1param(outBackInternal, 1.70158)
+					inOutBack = with1param(inOutBackInternal, 1.70158)
+
+					
+					self:finishtweening()
+
+
+				--random comment dont worry about me :]
+
+				if GAMESTATE:GetCurrentSong() and GAMESTATE:GetCurrentSong():GetDisplayMainTitle() == '7thSense' then
+					self:queuecommand('senseStart')
 				else
-					return -popElasticInternal(t * 2 - 1, damp, count)
+					self:queuecommand('senseEnd')
 				end
-			end
+				
 
-			popElastic = with2params(popElasticInternal, 1.4, 6)
-			tapElastic = with2params(tapElasticInternal, 1.4, 6)
-			pulseElastic = with2params(pulseElasticInternal, 1.4, 6)
-
-			impulse = with1param(function(t, damp)
-				t = t ^ damp
-				return t * (1000 ^ -t - 0.001) * 18.6
-			end, 0.9)
-
-			function instant() return 1 end
-			function linear(t) return t end
-			function inQuad(t) return t * t end
-			function outQuad(t) return -t * (t - 2) end
-			function inOutQuad(t)
-				t = t * 2
-				if t < 1 then
-					return 0.5 * t ^ 2
+				if GAMESTATE:GetCurrentSong() and GAMESTATE:GetCurrentSong():GetDisplayMainTitle() == 'SAtAN' then
+					self:queuecommand('satanStart')
 				else
-					return 1 - 0.5 * (2 - t) ^ 2
+					self:queuecommand('satanEnd')
 				end
-			end
-			function inCubic(t) return t * t * t end
-			function outCubic(t) return 1 - (1 - t) ^ 3 end
-			function inOutCubic(t)
-				t = t * 2
-				if t < 1 then
-					return 0.5 * t ^ 3
+
+
+
+
+				
+
+
+				if GAMESTATE:GetCurrentSong() and GAMESTATE:GetCurrentSong():GetDisplayMainTitle() == 'GHOUL' then
+					self:queuecommand('ghoulStart')
 				else
-					return 1 - 0.5 * (2 - t) ^ 3
+					self:queuecommand('ghoulEnd')
 				end
-			end
-			function inQuart(t) return t * t * t * t end
-			function outQuart(t) return 1 - (1 - t) ^ 4 end
-			function inOutQuart(t)
-				t = t * 2
-				if t < 1 then
-					return 0.5 * t ^ 4
-				else
-					return 1 - 0.5 * (2 - t) ^ 4
-				end
-			end
-			function inQuint(t) return t ^ 5 end
-			function outQuint(t) return 1 - (1 - t) ^ 5 end
-			function inOutQuint(t)
-				t = t * 2
-				if t < 1 then
-					return 0.5 * t ^ 5
-				else
-					return 1 - 0.5 * (2 - t) ^ 5
-				end
-			end
-			function inExpo(t) return 1000 ^ (t - 1) - 0.001 end
-			function outExpo(t) return 1.001 - 1000 ^ -t end
-			function inOutExpo(t)
-				t = t * 2
-				if t < 1 then
-					return 0.5 * 1000 ^ (t - 1) - 0.0005
-				else
-					return 1.0005 - 0.5 * 1000 ^ (1 - t)
-				end
-			end
-			function inCirc(t) return 1 - sqrt(1 - t * t) end
-			function outCirc(t) return sqrt(-t * t + 2 * t) end
-			function inOutCirc(t)
-				t = t * 2
-				if t < 1 then
-					return 0.5 - 0.5 * sqrt(1 - t * t)
-				else
-					t = t - 2
-					return 0.5 + 0.5 * sqrt(1 - t * t)
-				end
-			end
-
-			function outBounce(t)
-				if t < 1 / 2.75 then
-					return 7.5625 * t * t
-				elseif t < 2 / 2.75 then
-					t = t - 1.5 / 2.75
-					return 7.5625 * t * t + 0.75
-				elseif t < 2.5 / 2.75 then
-					t = t - 2.25 / 2.75
-					return 7.5625 * t * t + 0.9375
-				else
-					t = t - 2.625 / 2.75
-					return 7.5625 * t * t + 0.984375
-				end
-			end
-			function inBounce(t) return 1 - outBounce(1 - t) end
-			function inOutBounce(t)
-				if t < 0.5 then
-					return inBounce(t * 2) * 0.5
-				else
-					return outBounce(t * 2 - 1) * 0.5 + 0.5
-				end
-			end
-
-			function inSine(x) return 1 - cos(x * (pi * 0.5)) end
-
-			function outSine(x) return sin(x * (pi * 0.5)) end
-
-			function inOutSine(x) return 0.5 - 0.5 * cos(x * pi) end
-
-			function outElasticInternal(t, a, p)
-				return a * pow(2, -10 * t) *
-						sin((t - p / (2 * pi) * asin(1 / a)) * 2 * pi / p) + 1
-			end
-			local function inElasticInternal(t, a, p)
-				return 1 - outElasticInternal(1 - t, a, p)
-			end
-			function inOutElasticInternal(t, a, p)
-				return t < 0.5 and 0.5 * inElasticInternal(t * 2, a, p) or 0.5 + 0.5 *
-						outElasticInternal(t * 2 - 1, a, p)
-			end
-
-			inElastic = with2params(inElasticInternal, 1, 0.3)
-			outElastic = with2params(outElasticInternal, 1, 0.3)
-			inOutElastic = with2params(inOutElasticInternal, 1, 0.3)
-
-			function inBackInternal(t, a) return t * t * (a * t + t - a) end
-			function outBackInternal(t, a)
-				t = t - 1
-				return t * t * ((a + 1) * t + a) + 1
-			end
-			function inOutBackInternal(t, a)
-				return t < 0.5 and 0.5 * inBackInternal(t * 2, a) or 0.5 + 0.5 *
-						outBackInternal(t * 2 - 1, a)
-			end
-
-			inBack = with1param(inBackInternal, 1.70158)
-			outBack = with1param(outBackInternal, 1.70158)
-			inOutBack = with1param(inOutBackInternal, 1.70158)
-
 			
-			self:finishtweening()
+			end"
+
+	ghoulStartCommand="%function(self)
+					local scx = SCREEN_CENTER_X
+					local scy = SCREEN_CENTER_Y
+					local sw = SCREEN_WIDTH
+					local sh = SCREEN_HEIGHT
+					local sqrt = math.sqrt
+
+					local sin = math.sin
+					local asin = math.asin
+					local cos = math.cos
+					local pow = math.pow
+					local exp = math.exp
+					local pi = math.pi
+					local abs = math.abs
+				local y_sky = self:GetParent():GetChildAt(0):GetChildAt(0)
+				local y_moonglow = self:GetParent():GetChildAt(0):GetChildAt(1)
+				local y_moon = self:GetParent():GetChildAt(0):GetChildAt(2)
+				local y_clouds = self:GetParent():GetChildAt(0):GetChildAt(3)
+				local y_mountain = self:GetParent():GetChildAt(0):GetChildAt(4)
+				local y_waterbg = self:GetParent():GetChildAt(0):GetChildAt(5)
+				local y_faithl = {}
+				local ym_faithl = {}
+				local y_faithr = {}
+				local ym_faithr = {}
+				local epicaux = self:GetParent():GetChildAt(2):GetChildAt(0):GetChildAt(4)
+				y_faithl[1] = self:GetParent():GetChildAt(0):GetChildAt(6)
+				y_faithl[2] = self:GetParent():GetChildAt(0):GetChildAt(7)
+				y_faithl[3] = self:GetParent():GetChildAt(0):GetChildAt(8)
+				ym_faithl[1] = self:GetParent():GetChildAt(0):GetChildAt(9)
+				ym_faithl[2] = self:GetParent():GetChildAt(0):GetChildAt(10)
+				ym_faithl[3] = self:GetParent():GetChildAt(0):GetChildAt(11)
+				y_faithr[1] = self:GetParent():GetChildAt(0):GetChildAt(12)
+				y_faithr[2] = self:GetParent():GetChildAt(0):GetChildAt(13)
+				y_faithr[3] = self:GetParent():GetChildAt(0):GetChildAt(14)
+				ym_faithr[1] = self:GetParent():GetChildAt(0):GetChildAt(15)
+				ym_faithr[2] = self:GetParent():GetChildAt(0):GetChildAt(16)
+				ym_faithr[3] = self:GetParent():GetChildAt(0):GetChildAt(17)
+				local y_water = self:GetParent():GetChildAt(0):GetChildAt(18)
+
+					epicaux:x(0)
+					epicaux:tween(1,outQuad)
+					epicaux:x(1)
+					ajjjqbbb:diffusealpha(0)
+					ajjjqbbb:hidden(0)
+					ajjjqbbb:tween(1,outQuad)
+					ajjjqbbb:diffusealpha(1)
+					ajjjqbbb:sleep(0)
+					local faithx = {140, 190, 260}
+					local faithzoom = {.4, .55, .8}
+					local faithzoom2 = {.2, .5, 1}
+					local faithy = {.4, .55, .8}
+
+					for i = 1, 3 do
+						y_faithl[i]:hidden(0)
+						y_faithr[i]:hidden(0)
+
+						ym_faithl[i]:hidden(0)
+						ym_faithr[i]:hidden(0)
+						ym_faithl[i]:basezoomy(-1)
+						ym_faithr[i]:basezoomy(-1)
+
+						y_faithl[i]:zoom(faithzoom[i])
+						y_faithl[i]:xy(scx - (faithx[i]), scy)
+						y_faithr[i]:zoom(faithzoom[i])
+						y_faithr[i]:xy(scx + (faithx[i]), scy)
+
+						ym_faithl[i]:diffusealpha(.4)
+						ym_faithl[i]:zoom(faithzoom[i])
+						ym_faithl[i]:xy(scx - (faithx[i]), scy + 400 * faithzoom[i])
+						ym_faithr[i]:diffusealpha(.4)
+						ym_faithr[i]:zoom(faithzoom[i])
+						ym_faithr[i]:xy(scx + (faithx[i]), scy + 400 * faithzoom[i])
+
+						y_faithl[i]:addy(120 + 200 * faithzoom2[i])
+						y_faithl[i]:tween(8 * 60 / 230, outCubic)
+						y_faithl[i]:addy(-120 - 200 * faithzoom2[i])
+						y_faithr[i]:addy(120 + 200 * faithzoom2[i])
+						y_faithr[i]:tween(8 * 60 / 230, outCubic)
+						y_faithr[i]:addy(-120 - 200 * faithzoom2[i])
+
+						ym_faithl[i]:addy(120 + 200 * faithzoom2[i])
+						ym_faithl[i]:tween(8 * 60 / 230, outCubic)
+						ym_faithl[i]:addy(-120 - 200 * faithzoom2[i])
+						ym_faithr[i]:addy(120 + 200 * faithzoom2[i])
+						ym_faithr[i]:tween(8 * 60 / 230, outCubic)
+						ym_faithr[i]:addy(-120 - 200 * faithzoom2[i])
+
+					end
+					y_sky:hidden(0)
+					y_sky:stretchto(0, 0, sw, sh)
+
+					y_moonglow:hidden(0)
+					y_moonglow:xy(scx, scy - 160)
+					y_moonglow:blend('add')
+					y_moonglow:diffusealpha(.8)
+					y_moonglow:zoom(.5)
+
+					y_moon:hidden(0)
+					y_moon:xy(scx, scy - 160)
+					y_moon:zoom(.5)
+
+					y_clouds:hidden(0)
+					y_clouds:xy(scx, scy * .5)
+					y_clouds:customtexturerect(0, 0, 5, 10)
+					y_clouds:zoom(5)
+					y_clouds:texcoordvelocity(.02, 0)
+					y_clouds:blend('add')
+					y_clouds:diffusealpha(.3)
+
+					y_mountain:hidden(0)
+					y_mountain:valign(1)
+					y_mountain:croptop(.03)
+					y_mountain:xy(scx, sh - 120)
+					y_mountain:zoomx(3)
+					y_mountain:zoomy(.5)
+					y_mountain:customtexturerect(0, 0, 5, 1)
+
+					y_mountain:addy(120)
+					y_mountain:tween(8 * 60 / 230, outCubic)
+					y_mountain:addy(-120)
+
+					y_waterbg:hidden(0)
+					y_waterbg:stretchto(0, sh / 2, sw, sh)
+					y_waterbg:addy(60)
+					y_waterbg:fadetop(.03)
+					y_waterbg:diffuse(.6, .6, .6, 1)
+
+					y_waterbg:addy(120)
+					y_waterbg:tween(8 * 60 / 230, outCubic)
+					y_waterbg:addy(-120)
+
+					y_water:hidden(0)
+					y_water:xy(scx, sh + 50, z, -1200)
+					y_water:customtexturerect(0, 0, 1, 2)
+					y_water:rotationx(-75)
+					y_water:zoom(1.8)
+					y_water:zoomz(9)
+					y_water:fadetop(.2)
+					y_water:fadebottom(1)
+					y_water:texcoordvelocity(0, -.02)
+					y_water:blend('add')
+
+					y_water:addy(600)
+					y_water:rotationx(-20)
+					y_water:tween(8 * 60 / 230, outCubic)
+					y_water:addy(-600)
+					y_water:rotationx(-75)
+	end"
+
+	ghoulEndCommand="%function(self)
+		ajjjqbbb:hidden(1)
+	end"
+
+	satanStartCommand="%function(self)
+				local epicaux = self:GetParent():GetChildAt(2):GetChildAt(0):GetChildAt(4)
+				local satanContainer = self:GetParent():GetChildAt(2)
+				local satan = self:GetParent():GetChildAt(2):GetChildAt(0)
+				local quan = satan:GetChildAt(0)
+				local bgRadial = satan:GetChildAt(1)
+				local bgZigzag = satan:GetChildAt(3)
+				local bubbles = satan:GetChildAt(2)
+				local epicaux = satan:GetChildAt(4)
+					local scx = SCREEN_CENTER_X
+					local scy = SCREEN_CENTER_Y
+					local sw = SCREEN_WIDTH
+					local sh = SCREEN_HEIGHT
+					local sqrt = math.sqrt
+
+					local sin = math.sin
+					local asin = math.asin
+					local cos = math.cos
+					local pow = math.pow
+					local exp = math.exp
+					local pi = math.pi
+					local abs = math.abs
+
+					satanContainer:hidden(0)
+					satan:hidden(0)
+					satanContainer:diffusealpha(0)
+
+					satan:rotationy(30)
+					local beat = GAMESTATE:GetSongBeat()
+					local function randomXD(t)
+						if t == 0 then return 0.5 else
+						return math.mod(math.sin(t * 3229.3) * 43758.5453, 1) end
+					end
+					quan:hidden(0)
+					quan:stretchto(-sw*2,-sh*2,sw*2,sh*2)
+					quan:rotationy(-30)
+					quan:diffuse(150/255,7/255,14/255,1)
+					bgRadial:diffuse(100/255,7/255,14/255,1)
+					bgRadial:zoomto(sw*3,sw*3)
+					bgRadial:xy(0,scy)
+					bgRadial:hidden(0)
+
+					bubbles:xywh(scx,scy,sw,sh)
+					bubbles:diffusealpha(0.08)
+					bubbles:customtexturerect(0,0,1,1)
+					bubbles:texcoordvelocity(0.1,0.1)
+					bgZigzag:customtexturerect(0,0,6,1)
+					bgZigzag:texcoordvelocity(4,0)
+					bgZigzag:aux(1)
+					satan:xy(scx,scy)
+					epicaux:x(0)
+					epicaux:tween(1,outQuad)
+					epicaux:x(1)
 
 
+					satan:SetDrawFunction(function(self)
+						quan:diffusealpha(epicaux:GetX())
+						quan:Draw()
+						
+						local beat = GAMESTATE:GetSongBeat()
+						for i=-30,30,1 do
+							bgZigzag:blend('subtract')
+							bgZigzag:zoomto(sw*2,sh/4)
+							bgZigzag:xy(0,sh/16*i)
+							bgZigzag:rotationz(-i*4*bgZigzag:getaux()+randomXD(i*1.3)*5*math.sin(beat+i))
+							bgZigzag:diffuse(0,0,0,.4*epicaux:GetX())
+							bgZigzag:z(-300+randomXD(i*1.8)*300*math.sin(beat+i))
+							bgZigzag:Draw()
+						end
+						for i=-30,30,1 do
+							bgZigzag:blend('add')
+							bgZigzag:zoomto(sw*3,sh/4)
+							bgZigzag:xy(0,sh/16*i)
+							bgZigzag:rotationz(i*4*bgZigzag:getaux()+randomXD(i*1.4)*5*math.sin(beat/3+i))
+							bgZigzag:diffuse(1,0,0,randomXD(i*1.1)*epicaux:GetX())
+							bgZigzag:z(randomXD(i*1.9)*300*math.sin(beat/3+i))
+							bgZigzag:Draw()
+						end
+					end)
 
+	end"
+
+	satanEndCommand="%function(self)
+				local satanContainer = self:GetParent():GetChildAt(2)
+				satanContainer:diffusealpha(1)
+				satanContainer:tween(1,outQuad)
+				satanContainer:diffusealpha(0)
+				satanContainer:hidden(1)
+	end"
+
+	senseStartCommand="%function(self)
 		local citybg = self:GetParent():GetChildAt(1)
 		local citysky = self:GetParent():GetChildAt(1):GetChildAt(0)
 		local fulltower = self:GetParent():GetChildAt(1):GetChildAt(1)
@@ -261,9 +533,7 @@
 		local finger2 = self:GetParent():GetChildAt(1):GetChildAt(1):GetChildAt(0):GetChildAt(2)
 		local towerl = self:GetParent():GetChildAt(1):GetChildAt(1):GetChildAt(1)
 		local towerr = self:GetParent():GetChildAt(1):GetChildAt(1):GetChildAt(2)
-		
 
-		if GAMESTATE:GetCurrentSong() and GAMESTATE:GetCurrentSong():GetDisplayMainTitle() == '7thSense' then
 			citybg:hidden(0)
 			citysky:diffusealpha(0)
 			stower:y(200)
@@ -279,213 +549,14 @@
 			towerr:x(SCREEN_WIDTH+100)
 			towerr:tween(0.94,outCirc)
 			towerr:x(SCREEN_CENTER_X*1.7)
-		else
-			citybg:hidden(1)
-			citysky:diffusealpha(0)
-		end
 
+	end"
 
-		local satanContainer = self:GetParent():GetChildAt(2)
-		local satan = self:GetParent():GetChildAt(2):GetChildAt(0)
-		local quan = satan:GetChildAt(0)
-		local bgRadial = satan:GetChildAt(1)
-		local bgZigzag = satan:GetChildAt(3)
-		local bubbles = satan:GetChildAt(2)
-
-		if GAMESTATE:GetCurrentSong() and GAMESTATE:GetCurrentSong():GetDisplayMainTitle() == 'SAtAN' then
-			satanContainer:hidden(0)
-			satan:hidden(0)
-			satan:rotationy(30)
-			local beat = GAMESTATE:GetSongBeat()
-			local function randomXD(t)
-				if t == 0 then return 0.5 else
-				return math.mod(math.sin(t * 3229.3) * 43758.5453, 1) end
-			end
-			quan:hidden(0)
-			quan:stretchto(-sw*2,-sh*2,sw*2,sh*2)
-			quan:rotationy(-30)
-			quan:diffuse(100/255,7/255,14/255,1)
-			bgRadial:diffuse(100/255,7/255,14/255,1)
-			bgRadial:zoomto(sw*3,sw*3)
-			bgRadial:xy(0,scy)
-			bgRadial:hidden(0)
-
-			bubbles:xywh(scx,scy,sw,sh)
-			bubbles:diffusealpha(0.08)
-			bubbles:customtexturerect(0,0,1,1)
-			bubbles:texcoordvelocity(0.1,0.1)
-			bgZigzag:customtexturerect(0,0,6,1)
-			bgZigzag:texcoordvelocity(4,0)
-			bgZigzag:aux(1)
-			satan:xy(scx,scy)
-			satan:SetDrawFunction(function(self)
-				
-				quan:Draw()
-				
-				local beat = GAMESTATE:GetSongBeat()
-				for i=-30,30,1 do
-					bgZigzag:blend('subtract')
-					bgZigzag:zoomto(sw*2,sh/4)
-					bgZigzag:xy(0,sh/16*i)
-					bgZigzag:rotationz(-i*4*bgZigzag:getaux()+randomXD(i*1.3)*5*math.sin(beat+i))
-					bgZigzag:diffuse(0,0,0,.4)
-					bgZigzag:z(-300+randomXD(i*1.8)*300*math.sin(beat+i))
-					bgZigzag:Draw()
-				end
-				for i=-30,30,1 do
-					bgZigzag:blend('add')
-					bgZigzag:zoomto(sw*3,sh/4)
-					bgZigzag:xy(0,sh/16*i)
-					bgZigzag:rotationz(i*4*bgZigzag:getaux()+randomXD(i*1.4)*5*math.sin(beat/3+i))
-					bgZigzag:diffuse(1,0,0,randomXD(i*1.1))
-					bgZigzag:z(randomXD(i*1.9)*300*math.sin(beat/3+i))
-					bgZigzag:Draw()
-				end
-			end)
-		else
-	satan:hidden(1)
-		end
-
-
-
-
-		local y_sky = self:GetParent():GetChildAt(0):GetChildAt(0)
-		local y_moonglow = self:GetParent():GetChildAt(0):GetChildAt(1)
-		local y_moon = self:GetParent():GetChildAt(0):GetChildAt(2)
-		local y_clouds = self:GetParent():GetChildAt(0):GetChildAt(3)
-		local y_mountain = self:GetParent():GetChildAt(0):GetChildAt(4)
-		local y_waterbg = self:GetParent():GetChildAt(0):GetChildAt(5)
-		y_faithl[1] = self:GetParent():GetChildAt(0):GetChildAt(6)
-		y_faithl[2] = self:GetParent():GetChildAt(0):GetChildAt(7)
-		y_faithl[3] = self:GetParent():GetChildAt(0):GetChildAt(8)
-		ym_faithl[1] = self:GetParent():GetChildAt(0):GetChildAt(9)
-		ym_faithl[2] = self:GetParent():GetChildAt(0):GetChildAt(10)
-		ym_faithl[3] = self:GetParent():GetChildAt(0):GetChildAt(11)
-		y_faithr[1] = self:GetParent():GetChildAt(0):GetChildAt(12)
-		y_faithr[2] = self:GetParent():GetChildAt(0):GetChildAt(13)
-		y_faithr[3] = self:GetParent():GetChildAt(0):GetChildAt(14)
-		ym_faithr[1] = self:GetParent():GetChildAt(0):GetChildAt(15)
-		ym_faithr[2] = self:GetParent():GetChildAt(0):GetChildAt(16)
-		ym_faithr[3] = self:GetParent():GetChildAt(0):GetChildAt(17)
-		local y_water = self:GetParent():GetChildAt(0):GetChildAt(18)
-
-
-		if GAMESTATE:GetCurrentSong() and GAMESTATE:GetCurrentSong():GetDisplayMainTitle() == 'GHOUL' then
-
-			ajjjqbbb:diffusealpha(0)
-			ajjjqbbb:hidden(0)
-			ajjjqbbb:decelerate(1)
-			ajjjqbbb:diffusealpha(1)
-			ajjjqbbb:sleep(0)
-			local faithx = {140, 190, 260}
-			local faithzoom = {.4, .55, .8}
-			local faithzoom2 = {.2, .5, 1}
-			local faithy = {.4, .55, .8}
-
-			for i = 1, 3 do
-				y_faithl[i]:hidden(0)
-				y_faithr[i]:hidden(0)
-
-				ym_faithl[i]:hidden(0)
-				ym_faithr[i]:hidden(0)
-				ym_faithl[i]:basezoomy(-1)
-				ym_faithr[i]:basezoomy(-1)
-
-				y_faithl[i]:zoom(faithzoom[i])
-				y_faithl[i]:xy(scx - (faithx[i]), scy)
-				y_faithr[i]:zoom(faithzoom[i])
-				y_faithr[i]:xy(scx + (faithx[i]), scy)
-
-				ym_faithl[i]:diffusealpha(.4)
-				ym_faithl[i]:zoom(faithzoom[i])
-				ym_faithl[i]:xy(scx - (faithx[i]), scy + 400 * faithzoom[i])
-				ym_faithr[i]:diffusealpha(.4)
-				ym_faithr[i]:zoom(faithzoom[i])
-				ym_faithr[i]:xy(scx + (faithx[i]), scy + 400 * faithzoom[i])
-
-				y_faithl[i]:addy(120 + 200 * faithzoom2[i])
-				y_faithl[i]:tween(8 * 60 / 230, outCubic)
-				y_faithl[i]:addy(-120 - 200 * faithzoom2[i])
-				y_faithr[i]:addy(120 + 200 * faithzoom2[i])
-				y_faithr[i]:tween(8 * 60 / 230, outCubic)
-				y_faithr[i]:addy(-120 - 200 * faithzoom2[i])
-
-				ym_faithl[i]:addy(120 + 200 * faithzoom2[i])
-				ym_faithl[i]:tween(8 * 60 / 230, outCubic)
-				ym_faithl[i]:addy(-120 - 200 * faithzoom2[i])
-				ym_faithr[i]:addy(120 + 200 * faithzoom2[i])
-				ym_faithr[i]:tween(8 * 60 / 230, outCubic)
-				ym_faithr[i]:addy(-120 - 200 * faithzoom2[i])
-
-			end
-			y_sky:hidden(0)
-			y_sky:stretchto(0, 0, sw, sh)
-
-			y_moonglow:hidden(0)
-			y_moonglow:xy(scx, scy - 160)
-			y_moonglow:blend('add')
-			y_moonglow:diffusealpha(.8)
-			y_moonglow:zoom(.5)
-
-			y_moon:hidden(0)
-			y_moon:xy(scx, scy - 160)
-			y_moon:zoom(.5)
-
-			y_clouds:hidden(0)
-			y_clouds:xy(scx, scy * .5)
-			y_clouds:customtexturerect(0, 0, 5, 10)
-			y_clouds:zoom(5)
-			y_clouds:texcoordvelocity(.02, 0)
-			y_clouds:blend('add')
-			y_clouds:diffusealpha(.3)
-
-			y_mountain:hidden(0)
-			y_mountain:valign(1)
-			y_mountain:croptop(.03)
-			y_mountain:xy(scx, sh - 120)
-			y_mountain:zoomx(3)
-			y_mountain:zoomy(.5)
-			y_mountain:customtexturerect(0, 0, 5, 1)
-
-			y_mountain:addy(120)
-			y_mountain:tween(8 * 60 / 230, outCubic)
-			y_mountain:addy(-120)
-
-			y_waterbg:hidden(0)
-			y_waterbg:stretchto(0, sh / 2, sw, sh)
-			y_waterbg:addy(60)
-			y_waterbg:fadetop(.03)
-			y_waterbg:diffuse(.6, .6, .6, 1)
-
-			y_waterbg:addy(120)
-			y_waterbg:tween(8 * 60 / 230, outCubic)
-			y_waterbg:addy(-120)
-
-			y_water:hidden(0)
-			y_water:xy(scx, sh + 50, z, -1200)
-			y_water:customtexturerect(0, 0, 1, 2)
-			y_water:rotationx(-75)
-			y_water:zoom(1.8)
-			y_water:zoomz(9)
-			y_water:fadetop(.2)
-			y_water:fadebottom(1)
-			y_water:texcoordvelocity(0, -.02)
-			y_water:blend('add')
-
-			y_water:addy(600)
-			y_water:rotationx(-20)
-			y_water:tween(8 * 60 / 230, outCubic)
-			y_water:addy(-600)
-			y_water:rotationx(-75)
-
-		else
-
-			ajjjqbbb:hidden(1)
-
-		end
-
-		
-end" />
+	senseEndCommand="%function(self)
+		local citybg = self:GetParent():GetChildAt(1)
+		local citysky = self:GetParent():GetChildAt(1):GetChildAt(0)
+	 	citybg:hidden(1) citysky:diffusealpha(0) 
+	end"/>
 </children></Layer>
 	
 	<ActorFrame Command="queuecommand,Icon" IconCommand="%function(self) StyleIcon(); if not OatProfile().OATShowHeaders then SCREENMAN:GetTopScreen():GetChild('StyleIcon'):hidden(1) end end" />

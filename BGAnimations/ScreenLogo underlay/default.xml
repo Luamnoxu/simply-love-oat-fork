@@ -1,4 +1,20 @@
 <ActorFrame> <children>
-	<Layer File="YourIntro.mp4" InitCommand="stretchto,0,0,SCREEN_WIDTH,SCREEN_HEIGHT" />
-	<Layer File="Intro.ogg" InitCommand="%function(self) qqqqq = self self:get():Play() end" />
+	<Layer Type="Quad" InitCommand="%function(self)
+		self:stretchto(0,0,SCREEN_WIDTH,SCREEN_HEIGHT)
+		self:diffuse(0,0,0,1)
+		self:sleep(4.1)
+		self:queuecommand('Call')
+	end" CallMessageCommand="%function(self) MESSAGEMAN:Broadcast('Intro') end" />
+		<Layer File="unity.png" InitCommand="%function(self)
+			self:zoom(SCREEN_HEIGHT*0.0001)
+			self:xy(SCREEN_CENTER_X,SCREEN_CENTER_Y)
+			self:diffusealpha(0)
+			self:accelerate (1.2)
+			self:diffusealpha(1)
+			self:sleep(1.6)
+			self:decelerate (1.2)
+			self:diffusealpha(0)
+		end" />
+	<Layer File="YourIntro.mp4" InitCommand="hidden,1;stretchto,0,0,SCREEN_WIDTH,SCREEN_HEIGHT;animate,0;diffusealpha,0" IntroMessageCommand="hidden,0;animate,1;decelerate,0.2;diffusealpha,1;" />
+	<Layer File="Intro.ogg" IntroMessageCommand="%function(self) self:get():Play() end" />
 </children></ActorFrame>

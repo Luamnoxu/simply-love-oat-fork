@@ -635,7 +635,6 @@ function UpdateMeasureText(pn)
                 end
             end
         end
-        measureText[pn]:settext(str)
     end
 end
 
